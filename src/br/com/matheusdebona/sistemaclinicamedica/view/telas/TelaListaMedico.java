@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
@@ -30,6 +31,11 @@ public class TelaListaMedico {
 	public JFrame frmSistema;
 	private JTable table;
 	private List<MedicoEntity> medicos;
+	private JTextField textBuscarPorNome;
+	private JTextField textId;
+	private JButton btnExcluir;
+	private JButton btnEditar;
+	
 
 	/**
 	 * Launch the application.
@@ -70,59 +76,6 @@ public class TelaListaMedico {
 		scrollPane.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		scrollPane.setBounds(54, 175, 1158, 383);
 		frmSistema.getContentPane().add(scrollPane);
-		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnEditar.setBackground(Color.WHITE);
-		btnEditar.setForeground(Color.PINK);
-		btnEditar.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnEditar.setEnabled(false);
-		btnEditar.setBounds(834, 569, 174, 45);
-		frmSistema.getContentPane().add(btnEditar);
-		
-		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				popularTabela();
-			}
-		});
-		btnAtualizar.setBackground(Color.WHITE);
-		btnAtualizar.setForeground(Color.PINK);
-		btnAtualizar.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnAtualizar.setBounds(1038, 569, 174, 45);
-		frmSistema.getContentPane().add(btnAtualizar);
-		
-		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setForeground(Color.PINK);
-		btnExcluir.setBackground(Color.WHITE);
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MedicoEntity medico = medicos.get(table.getSelectedRow());
-				if(JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o médico " + medico.getNome() + " ?") == JOptionPane.OK_OPTION) {
-					try {
-						new MedicoService().excluirMedico(medico.getCodigo());
-						btnExcluir.setEnabled(false);
-						btnEditar.setEnabled(false);
-						popularTabela();
-					} catch (NegocioException e1) {
-						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
-					}
-				} else {
-					popularTabela();
-					btnExcluir.setEnabled(false);
-					btnEditar.setEnabled(false);
-				}
-				
-			}
-		});
-		btnExcluir.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnExcluir.setEnabled(false);
-		btnExcluir.setBounds(54, 569, 174, 45);
-		frmSistema.getContentPane().add(btnExcluir);
 		
 		table = new JTable();
 		table.setRowHeight(30);
@@ -182,16 +135,176 @@ public class TelaListaMedico {
 		btnVoltar.setBounds(10, 11, 125, 45);
 		frmSistema.getContentPane().add(btnVoltar);
 		
+		btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				MedicoEntity medicoSelecionado = medicos.get(table.getSelectedRow());
+				
+				TelaEditarMedico tem = new TelaEditarMedico();
+			
+				tem.carregarMedicoPorId(medicoSelecionado.getCodigo());
+				
+				tem.setVisible(true);
+				
+				tem.setLocationRelativeTo(null);
+				
+				frmSistema.dispose();
+		
+			}
+		});
+		btnEditar.setForeground(Color.PINK);
+		btnEditar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnEditar.setEnabled(false);
+		btnEditar.setBackground(Color.WHITE);
+		btnEditar.setBounds(952, 569, 125, 45);
+		frmSistema.getContentPane().add(btnEditar);
+		
+		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				popularTabela();
+				
+			}
+		});
+		btnAtualizar.setForeground(Color.PINK);
+		btnAtualizar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnAtualizar.setBackground(Color.WHITE);
+		btnAtualizar.setBounds(1087, 569, 125, 45);
+		frmSistema.getContentPane().add(btnAtualizar);
+		
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				MedicoEntity medico = medicos.get(table.getSelectedRow());
+				
+				if(JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o médico " + medico.getNome() + " ?") == JOptionPane.OK_OPTION) {
+					try {
+						new MedicoService().excluirMedico(medico.getCodigo());
+						
+						popularTabela();
+						
+						btnExcluir.setEnabled(false);
+						btnEditar.setEnabled(false);
+						
+					} catch (NegocioException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMensagemDeErro());
+					}
+				} else {
+					
+					btnExcluir.setEnabled(false);
+					btnEditar.setEnabled(false);
+					
+					popularTabela();
+				}
+				
+				
+			}
+		});
+		btnExcluir.setForeground(Color.PINK);
+		btnExcluir.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnExcluir.setEnabled(false);
+		btnExcluir.setBackground(Color.WHITE);
+		btnExcluir.setBounds(54, 569, 125, 45);
+		frmSistema.getContentPane().add(btnExcluir);
+		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Criado por Matheus de Bona");
 		lblNewLabel_1_1_1.setForeground(Color.WHITE);
 		lblNewLabel_1_1_1.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblNewLabel_1_1_1.setBounds(963, 631, 249, 26);
+		lblNewLabel_1_1_1.setBounds(507, 644, 249, 26);
 		frmSistema.getContentPane().add(lblNewLabel_1_1_1);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaListaCliente.class.getResource("/br/com/matheusdebona/sistemaclinicamedica/view/resource/Ícone - Rosa fundo rosa claro.jpg")));
-		lblNewLabel.setBounds(0, 0, 1264, 681);
-		frmSistema.getContentPane().add(lblNewLabel);
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				MedicoEntity medicoFiltro = new MedicoEntity();
+				
+				medicoFiltro.setNome(textBuscarPorNome.getText());
+				medicoFiltro.setCrm(textBuscarPorNome.getText());
+				medicoFiltro.setEmail(textBuscarPorNome.getText());
+				medicoFiltro.setEspecialidade(textBuscarPorNome.getText());
+				
+				try {
+					if(!textId.getText().equals("")) {
+						Long codigo = Long.parseLong(textId.getText());
+						medicoFiltro.setCodigo(codigo);
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Erro");
+				}
+				popularTabelaFiltrada(medicoFiltro);
+				
+				
+			}
+		});
+		btnBuscar.setForeground(Color.PINK);
+		btnBuscar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnBuscar.setEnabled(false);
+		btnBuscar.setBackground(Color.WHITE);
+		btnBuscar.setBounds(817, 569, 125, 45);
+		frmSistema.getContentPane().add(btnBuscar);
+		
+		JLabel lblNomeOuCrm = new JLabel("NOME ou CRM ou EMAIL ou ESPECIALIDADE");
+		lblNomeOuCrm.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNomeOuCrm.setForeground(Color.PINK);
+		lblNomeOuCrm.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNomeOuCrm.setEnabled(false);
+		lblNomeOuCrm.setBounds(395, 569, 412, 45);
+		frmSistema.getContentPane().add(lblNomeOuCrm);
+		
+		textBuscarPorNome = new JTextField();
+		textBuscarPorNome.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				lblNomeOuCrm.setVisible(false);
+				btnBuscar.setEnabled(true);
+			}
+		});
+		textBuscarPorNome.setHorizontalAlignment(SwingConstants.CENTER);
+		textBuscarPorNome.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		textBuscarPorNome.setColumns(10);
+		textBuscarPorNome.setBounds(395, 569, 412, 45);
+		frmSistema.getContentPane().add(textBuscarPorNome);
+		
+		JLabel lblId = new JLabel("ID");
+		lblId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblId.setForeground(Color.PINK);
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblId.setEnabled(false);
+		lblId.setBounds(310, 569, 75, 45);
+		frmSistema.getContentPane().add(lblId);
+		
+		textId = new JTextField();
+		textId.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				lblId.setVisible(false);
+				btnBuscar.setEnabled(true);
+
+			}
+		});
+		textId.setHorizontalAlignment(SwingConstants.CENTER);
+		textId.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		textId.setColumns(10);
+		textId.setBounds(310, 569, 75, 45);
+		frmSistema.getContentPane().add(textId);
+		
+		JLabel lblBuscar = new JLabel("Buscar por: ");
+		lblBuscar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBuscar.setForeground(Color.PINK);
+		lblBuscar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblBuscar.setBounds(199, 569, 111, 45);
+		frmSistema.getContentPane().add(lblBuscar);
+		
+		JLabel lblFundo = new JLabel("");
+		lblFundo.setIcon(new ImageIcon(TelaListaMedico.class.getResource("/br/com/matheusdebona/sistemaclinicamedica/view/resource/Ícone - Rosa fundo rosa claro.jpg")));
+		lblFundo.setBounds(0, 0, 1264, 681);
+		frmSistema.getContentPane().add(lblFundo);
 		
 		
 		
@@ -214,5 +327,25 @@ public class TelaListaMedico {
 		}
 				
 	}
+	
+	private void popularTabelaFiltrada(MedicoEntity medicoFiltro) {
+		try {
+							
+			medicos = new MedicoService().buscarMedicoFiltrado(medicoFiltro);
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.getDataVector().removeAllElements();
+			
+			for (MedicoEntity medicoEntity : medicos) {
+				model.addRow(new Object[] { medicoEntity.getCodigo(), medicoEntity.getNome(), medicoEntity.getCrm(), medicoEntity.getEmail(), medicoEntity.getEspecialidade()});
+				
+				}
+			
+		} catch (NegocioException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao buscar Médicos do banco de dados" + e.getMensagemDeErro());
+			e.printStackTrace();
+		}
+		
+	}
+	
 }
 

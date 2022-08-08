@@ -22,4 +22,15 @@ public String salvarMedico(MedicoEntity medico) throws NegocioException {
 		new MedicoDAO().excluirMedico(codigoMedico);
 	}
 
+	public MedicoEntity buscarMedicoPorId(Long codigoMedico) throws NegocioException {
+		return new MedicoDAO().buscarMedicoPorId(codigoMedico);
+	}
+	
+	public String editarMedico(MedicoEntity medico) throws NegocioException {
+		return new MedicoDAO().editarMedico(medico);
+	}
+	
+	public List<MedicoEntity> buscarMedicoFiltrado(MedicoEntity medico) throws NegocioException {
+		return new MedicoDAO().buscarMedicoFiltrado(medico);
+	}
 }

@@ -17,11 +17,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import br.com.matheusdebona.sistemaclinicamedica.core.entity.ClienteEntity;
-import br.com.matheusdebona.sistemaclinicamedica.core.service.ClienteService;
+import br.com.matheusdebona.sistemaclinicamedica.core.entity.MedicoEntity;
+import br.com.matheusdebona.sistemaclinicamedica.core.service.MedicoService;
 import br.com.matheusdebona.sistemaclinicamedica.util.NegocioException;
 
-public class TelaEditarCliente extends JFrame {
+public class TelaEditarMedico extends JFrame {
 
 	/**
 	 * 
@@ -29,9 +29,9 @@ public class TelaEditarCliente extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textNome;
-	private JTextField textCPF;
-	private JTextField textEndereco;
-	private JTextField textTelefone;
+	private JTextField textCRM;
+	private JTextField textEmail;
+	private JTextField textEspecialidade;
 	private JLabel lblCadastroSucesso;
 	private JTextField textCodigo;
 
@@ -55,7 +55,7 @@ public class TelaEditarCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaEditarCliente() {
+	public TelaEditarMedico() {
 		setResizable(false);
 		setAlwaysOnTop(true);
 		setTitle("Gestão de Clínicas - Matheus de Bona");
@@ -68,7 +68,7 @@ public class TelaEditarCliente extends JFrame {
 		contentPane.setLayout(null);
 		
 		
-		JLabel lblNewLabel = new JLabel("Atualizar Cliente");
+		JLabel lblNewLabel = new JLabel("Atualizar Médico");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 45));
@@ -92,23 +92,23 @@ public class TelaEditarCliente extends JFrame {
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ClienteEntity cliente = new ClienteEntity();
+				MedicoEntity medico = new MedicoEntity();
 
-				cliente.setCodigo(cliente.getCodigo());
-				cliente.setNome(textNome.getText());
-				cliente.setCpf(textCPF.getText());
-				cliente.setEndereco(textEndereco.getText());
-				cliente.setTelefone(textTelefone.getText());
+				medico.setCodigo(medico.getCodigo());
+				medico.setNome(textNome.getText());
+				medico.setCrm(textCRM.getText());
+				medico.setEmail(textEmail.getText());
+				medico.setEspecialidade(textEspecialidade.getText());
 				
-				ClienteService cs = new ClienteService();
+				MedicoService ms = new MedicoService();
 				
 				try {
-					cliente.setCodigo(Long.parseLong(textCodigo.getText()));
-					cs.editarCliente(cliente);
+					medico.setCodigo(Long.parseLong(textCodigo.getText()));
+					ms.editarMedico(medico);
 					dispose();
-					TelaListaCliente tlc = new TelaListaCliente();
-					tlc.frmSistema.setVisible(true);
-					tlc.frmSistema.setLocationRelativeTo(null);
+					TelaListaMedico tlm = new TelaListaMedico();
+					tlm.frmSistema.setVisible(true);
+					tlm.frmSistema.setLocationRelativeTo(null);
 				
 				} catch (NegocioException e1) {
 					e1.getMensagemDeErro();
@@ -133,43 +133,46 @@ public class TelaEditarCliente extends JFrame {
 		lblNewLabel_1_1_1.setBounds(507, 622, 249, 26);
 		contentPane.add(lblNewLabel_1_1_1);
 		
-		textCPF = new JTextField();
-		textCPF.setHorizontalAlignment(SwingConstants.CENTER);
-		textCPF.setFont(new Font("Verdana", Font.PLAIN, 15));
-		textCPF.setColumns(10);
-		textCPF.setBounds(460, 284, 343, 32);
-		contentPane.add(textCPF);
+		textCRM = new JTextField();
+		textCRM.setHorizontalAlignment(SwingConstants.CENTER);
+		textCRM.setFont(new Font("Verdana", Font.PLAIN, 15));
+		textCRM.setColumns(10);
+		textCRM.setBounds(460, 284, 343, 32);
+		contentPane.add(textCRM);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("CPF");
+		JLabel lblNewLabel_1_1 = new JLabel("CRM");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setForeground(Color.WHITE);
 		lblNewLabel_1_1.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblNewLabel_1_1.setBounds(615, 256, 34, 32);
+		lblNewLabel_1_1.setBounds(600, 256, 63, 32);
 		contentPane.add(lblNewLabel_1_1);
 		
-		textEndereco = new JTextField();
-		textEndereco.setHorizontalAlignment(SwingConstants.CENTER);
-		textEndereco.setFont(new Font("Verdana", Font.PLAIN, 15));
-		textEndereco.setColumns(10);
-		textEndereco.setBounds(460, 355, 343, 32);
-		contentPane.add(textEndereco);
+		textEmail = new JTextField();
+		textEmail.setHorizontalAlignment(SwingConstants.CENTER);
+		textEmail.setFont(new Font("Verdana", Font.PLAIN, 15));
+		textEmail.setColumns(10);
+		textEmail.setBounds(460, 355, 343, 32);
+		contentPane.add(textEmail);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Endereço");
+		JLabel lblNewLabel_1_2 = new JLabel("Email");
+		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_2.setForeground(Color.WHITE);
 		lblNewLabel_1_2.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblNewLabel_1_2.setBounds(590, 327, 83, 32);
 		contentPane.add(lblNewLabel_1_2);
 		
-		textTelefone = new JTextField();
-		textTelefone.setHorizontalAlignment(SwingConstants.CENTER);
-		textTelefone.setFont(new Font("Verdana", Font.PLAIN, 15));
-		textTelefone.setColumns(10);
-		textTelefone.setBounds(460, 426, 343, 32);
-		contentPane.add(textTelefone);
+		textEspecialidade = new JTextField();
+		textEspecialidade.setHorizontalAlignment(SwingConstants.CENTER);
+		textEspecialidade.setFont(new Font("Verdana", Font.PLAIN, 15));
+		textEspecialidade.setColumns(10);
+		textEspecialidade.setBounds(460, 426, 343, 32);
+		contentPane.add(textEspecialidade);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Telefone");
+		JLabel lblNewLabel_1_3 = new JLabel("Especialidade");
+		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_3.setForeground(Color.WHITE);
 		lblNewLabel_1_3.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblNewLabel_1_3.setBounds(593, 398, 78, 32);
+		lblNewLabel_1_3.setBounds(559, 398, 145, 32);
 		contentPane.add(lblNewLabel_1_3);
 		
 		lblCadastroSucesso = new JLabel("");
@@ -220,23 +223,23 @@ public class TelaEditarCliente extends JFrame {
 	
 	public void limparCampos() {
 		textNome.setText("");
-		textCPF.setText("");
-		textEndereco.setText("");
-		textTelefone.setText("");
+		textCRM.setText("");
+		textEmail.setText("");
+		textEspecialidade.setText("");
 	}
 	
-	public void carregarClientePorId(Long codigoCliente) {
+	public void carregarMedicoPorId(Long codigoMedico) {
 		try {
-			ClienteEntity clienteEncontrado = new ClienteService().buscarClientePorId(codigoCliente);
-			if(clienteEncontrado == null) {
-				JOptionPane.showMessageDialog(null, "O cliente não foi encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
+			MedicoEntity medicoEncontrado = new MedicoService().buscarMedicoPorId(codigoMedico);
+			if(medicoEncontrado == null) {
+				JOptionPane.showMessageDialog(null, "O Médico não foi encontrado", "Erro", JOptionPane.ERROR_MESSAGE);
 			} else {
 				
-				textCodigo.setText("" + clienteEncontrado.getCodigo());
-				textNome.setText(clienteEncontrado.getNome());
-				textCPF.setText(clienteEncontrado.getCpf());
-				textEndereco.setText(clienteEncontrado.getEndereco());
-				textTelefone.setText(clienteEncontrado.getTelefone());
+				textCodigo.setText("" + medicoEncontrado.getCodigo());
+				textNome.setText(medicoEncontrado.getNome());
+				textCRM.setText(medicoEncontrado.getCrm());
+				textEmail.setText(medicoEncontrado.getEmail());
+				textEspecialidade.setText(medicoEncontrado.getEspecialidade());
 				
 			}
 			
