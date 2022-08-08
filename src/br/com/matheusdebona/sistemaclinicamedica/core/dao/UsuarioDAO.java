@@ -111,6 +111,7 @@ public class UsuarioDAO {
 			
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new NegocioException("Login ou Senha inválidos.");
 		} finally {
 			try {

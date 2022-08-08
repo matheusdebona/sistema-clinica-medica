@@ -29,4 +29,9 @@ public class ClienteService {
 	public String editarCliente(ClienteEntity cliente) throws NegocioException {
 		return new ClienteBO().editarCliente(cliente);
 	}
+	
+	public List<ClienteEntity> buscarClienteFiltrado(ClienteEntity cliente) throws NegocioException {
+		return new ClienteBO().buscarClienteFiltrado(cliente);
+	}
+	
 }

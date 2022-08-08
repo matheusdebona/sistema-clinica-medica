@@ -54,4 +54,11 @@ public class ClienteBO {
 		}
 		
 	}
+	
+	public List<ClienteEntity> buscarClienteFiltrado(ClienteEntity cliente) throws NegocioException {
+		return new ClienteDAO().buscarClienteFiltrado(cliente);
+	}
+	
+	
+	
 }

@@ -180,6 +180,120 @@ public class ClienteDAO {
 		
 	}
 	
+	public List<ClienteEntity> buscarClienteFiltrado(ClienteEntity cliente) throws NegocioException {
+		
+		String sql = "SELECT ID_CLIENTE, NOME_CLIENTE, CPF_CLIENTE, ENDERECO_CLIENTE, TELEFONE_CLIENTE FROM CLIENTE ";
+		
+		boolean adicionaWhere = true;
+		
+		List<ClienteEntity> resultado = new ArrayList<>();
+		
+		if(cliente != null) {
+			if (cliente.getCodigo() != null) {
+				adicionaWhere = false;
+				sql += "WHERE ";
+				sql += "ID_CLIENTE = ? ";
+				
+			}
+			if (cliente.getNome() != null && !cliente.getNome().equals("")) {
+				if(adicionaWhere) {
+					sql += "WHERE ";
+					adicionaWhere = false;
+				} else {
+					sql += "AND ";
+				}
+				sql += "NOME_CLIENTE LIKE ? ";
+			}
+			if (cliente.getCpf() != null && !cliente.getCpf().equals("")) {
+				if(adicionaWhere) {
+					sql += "WHERE ";
+					adicionaWhere = false;
+				} else {
+					sql += "OR ";
+				}
+				sql += "CPF_CLIENTE LIKE ? ";
+			}
+			if (cliente.getEndereco() != null && !cliente.getEndereco().equals("")) {
+				if(adicionaWhere) {
+					sql += "WHERE ";
+					adicionaWhere = false;
+				} else {
+					sql += "OR ";
+				}
+				sql += "ENDERECO_CLIENTE LIKE ? ";
+			}
+			if (cliente.getTelefone() != null && !cliente.getTelefone().equals("")) {
+				if(adicionaWhere) {
+					sql += "WHERE ";
+					adicionaWhere = false;
+				} else {
+					sql += "OR ";
+				}
+				sql += "TELEFONE_CLIENTE LIKE ? ";
+			}
+			
+		}
+		System.out.println(sql);
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+			
+			int indice = 0;
+			
+			if(cliente != null) {
+				if(cliente.getCodigo() != null) {
+					indice = indice + 1;
+					ps.setLong(indice, cliente.getCodigo());
+				}
+				if (cliente.getNome() != null && !cliente.getNome().equals("")) {
+					indice = indice + 1;
+					ps.setString(indice, cliente.getNome() + "%");
+				}
+				if (cliente.getCpf() != null && !cliente.getCpf().equals("")) {
+					indice = indice + 1;
+					ps.setString(indice, cliente.getCpf() + "%");
+				}
+				if (cliente.getEndereco() != null && !cliente.getEndereco().equals("")) {
+					indice = indice + 1;
+					ps.setString(indice, cliente.getEndereco() + "%");
+				}
+				if (cliente.getTelefone() != null && !cliente.getTelefone().equals("")) {
+					indice = indice + 1;
+					ps.setString(indice, cliente.getTelefone() + "%");
+				}
+				
+			}
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				ClienteEntity clienteResultado = new ClienteEntity();
+				clienteResultado.setCodigo(rs.getLong("ID_CLIENTE"));
+				clienteResultado.setNome(rs.getString("NOME_CLIENTE"));
+				clienteResultado.setCpf(rs.getString("CPF_CLIENTE"));
+				clienteResultado.setEndereco(rs.getString("ENDERECO_CLIENTE"));
+				clienteResultado.setTelefone(rs.getString("TELEFONE_CLIENTE"));
+				resultado.add(clienteResultado);
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			throw new NegocioException("Busca filtrada falhou");
+		}finally {
+			try {
+				ps.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return resultado;
+	}	
+	
 	
 	
 }

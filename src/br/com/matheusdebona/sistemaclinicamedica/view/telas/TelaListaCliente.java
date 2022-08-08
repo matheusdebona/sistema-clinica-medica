@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
@@ -30,6 +31,8 @@ public class TelaListaCliente {
 	public JFrame frmSistema;
 	private JTable table;
 	private List<ClienteEntity> clientes;
+	private JTextField textBuscar;
+	private JTextField textId;
 
 	/**
 	 * Launch the application.
@@ -94,7 +97,7 @@ public class TelaListaCliente {
 		btnEditar.setForeground(Color.PINK);
 		btnEditar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(834, 569, 174, 45);
+		btnEditar.setBounds(952, 569, 125, 45);
 		frmSistema.getContentPane().add(btnEditar);
 		
 		JButton btnAtualizar = new JButton("Atualizar");
@@ -106,7 +109,7 @@ public class TelaListaCliente {
 		btnAtualizar.setBackground(Color.WHITE);
 		btnAtualizar.setForeground(Color.PINK);
 		btnAtualizar.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		btnAtualizar.setBounds(1038, 569, 174, 45);
+		btnAtualizar.setBounds(1087, 569, 125, 45);
 		frmSistema.getContentPane().add(btnAtualizar);
 		
 		JButton btnExcluir = new JButton("Excluir");
@@ -139,7 +142,7 @@ public class TelaListaCliente {
 		});
 		btnExcluir.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		btnExcluir.setEnabled(false);
-		btnExcluir.setBounds(54, 569, 174, 45);
+		btnExcluir.setBounds(54, 569, 125, 45);
 		frmSistema.getContentPane().add(btnExcluir);
 		
 		table = new JTable();
@@ -217,13 +220,95 @@ public class TelaListaCliente {
 		lblNewLabel_1_1_1.setBounds(507, 644, 249, 26);
 		frmSistema.getContentPane().add(lblNewLabel_1_1_1);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaListaCliente.class.getResource("/br/com/matheusdebona/sistemaclinicamedica/view/resource/Ícone - Rosa fundo rosa claro.jpg")));
-		lblNewLabel.setBounds(0, 0, 1264, 681);
-		frmSistema.getContentPane().add(lblNewLabel);
 		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ClienteEntity clienteFiltro = new ClienteEntity();
+				
+				clienteFiltro.setNome(textBuscar.getText());
+				clienteFiltro.setCpf(textBuscar.getText());
+				clienteFiltro.setTelefone(textBuscar.getText());
+				clienteFiltro.setEndereco(textBuscar.getText());
+				
+				try {
+					if(!textId.getText().equals("")) {
+						Long codigo = Long.parseLong(textId.getText());
+						clienteFiltro.setCodigo(codigo);
+					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Erro");
+				}
+				popularTabelaFiltrada(clienteFiltro);
+				
+			}
+		});
+		btnBuscar.setForeground(Color.PINK);
+		btnBuscar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		btnBuscar.setEnabled(false);
+		btnBuscar.setBackground(Color.WHITE);
+		btnBuscar.setBounds(817, 569, 125, 45);
+		frmSistema.getContentPane().add(btnBuscar);
 		
+		JLabel lblBuscar = new JLabel("NOME ou CPF ou ENDEREÇO ou TELEFONE");
+		lblBuscar.setForeground(Color.PINK);
+		lblBuscar.setEnabled(false);
+		lblBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblBuscar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBuscar.setBounds(395, 569, 412, 45);
+		frmSistema.getContentPane().add(lblBuscar);
 		
+		textBuscar = new JTextField();
+		textBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblBuscar.setVisible(false);
+				btnBuscar.setEnabled(true);
+				
+			}
+		});
+		textBuscar.setHorizontalAlignment(SwingConstants.CENTER);
+		textBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		textBuscar.setBounds(395, 569, 412, 45);
+		frmSistema.getContentPane().add(textBuscar);
+		textBuscar.setColumns(10);
+		
+		JLabel lblId = new JLabel("ID");
+		lblId.setForeground(Color.PINK);
+		lblId.setHorizontalAlignment(SwingConstants.CENTER);
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblId.setEnabled(false);
+		lblId.setBounds(310, 569, 75, 45);
+		frmSistema.getContentPane().add(lblId);
+		
+		textId = new JTextField();
+		textId.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				lblId.setVisible(false);
+				btnBuscar.setEnabled(true);
+				
+			}
+		});
+		textId.setHorizontalAlignment(SwingConstants.CENTER);
+		textId.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		textId.setColumns(10);
+		textId.setBounds(310, 569, 75, 45);
+		frmSistema.getContentPane().add(textId);
+		
+		JLabel lblBuscaPor = new JLabel("Buscar por: ");
+		lblBuscaPor.setForeground(Color.PINK);
+		lblBuscaPor.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBuscaPor.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblBuscaPor.setBounds(199, 569, 111, 45);
+		frmSistema.getContentPane().add(lblBuscaPor);
+		
+		JLabel lblFundo = new JLabel("");
+		lblFundo.setIcon(new ImageIcon(TelaListaCliente.class.getResource("/br/com/matheusdebona/sistemaclinicamedica/view/resource/Ícone - Rosa fundo rosa claro.jpg")));
+		lblFundo.setBounds(0, 0, 1264, 681);
+		frmSistema.getContentPane().add(lblFundo);
 		
 		popularTabela();
 	}
@@ -244,5 +329,25 @@ public class TelaListaCliente {
 		}
 				
 	}
+	
+	private void popularTabelaFiltrada(ClienteEntity clienteFiltro) {
+		try {
+							
+			clientes = new ClienteService().buscarClienteFiltrado(clienteFiltro);
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.getDataVector().removeAllElements();
+			
+			for (ClienteEntity clienteEntity : clientes) {
+				model.addRow(new Object[] { clienteEntity.getCodigo(), clienteEntity.getNome(), clienteEntity.getCpf(), clienteEntity.getEndereco(), clienteEntity.getTelefone()});
+				
+				}
+			
+		} catch (NegocioException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao buscar clientes do banco de dados" + e.getMensagemDeErro());
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }
