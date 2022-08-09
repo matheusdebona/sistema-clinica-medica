@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,12 +19,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
+import br.com.matheusdebona.sistemaclinicamedica.core.dao.connection.CriaDB;
 import br.com.matheusdebona.sistemaclinicamedica.core.entity.UsuarioEntity;
 import br.com.matheusdebona.sistemaclinicamedica.core.service.UsuarioService;
 import br.com.matheusdebona.sistemaclinicamedica.util.NegocioException;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class TelaLogin extends JFrame {
 
@@ -180,5 +180,14 @@ public class TelaLogin extends JFrame {
 		lblNewLabel_2.setIcon(new ImageIcon(TelaLogin.class.getResource("/br/com/matheusdebona/sistemaclinicamedica/view/resource/Ícone - Rosa fundo rosa claro.jpg")));
 		lblNewLabel_2.setBounds(0, 0, 1264, 797);
 		contentPane.add(lblNewLabel_2);
+		
+		CriaDB cdb = new CriaDB();
+		
+		cdb.criaSchema();
+		cdb.criaTabelaUsuario();
+		cdb.criaTabelaCliente();
+		cdb.criaTabelaMedico();
+		cdb.criaTabelaProcedimento();
+		
 	}
 }

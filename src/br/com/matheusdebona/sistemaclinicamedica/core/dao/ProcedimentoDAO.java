@@ -208,7 +208,6 @@ public class ProcedimentoDAO {
 			
 		}
 		
-		System.out.println(sql);
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		

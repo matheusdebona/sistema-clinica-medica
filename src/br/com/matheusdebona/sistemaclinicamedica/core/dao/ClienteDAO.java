@@ -233,7 +233,6 @@ public class ClienteDAO {
 			}
 			
 		}
-		System.out.println(sql);
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		

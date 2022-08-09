@@ -236,7 +236,6 @@ public String salvarMedico(MedicoEntity medico) throws NegocioException {
 			}
 			
 		}
-		System.out.println(sql);
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		

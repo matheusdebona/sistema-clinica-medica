@@ -27,23 +27,6 @@ public class ConexaoMySQL {
 		}
 
 	
-	//	public static void main(String[] args) {
-	
-		//		try {
-		//	Connection con = DriverManager.getConnection(urlDb, userDb, passDb);
-		//	Statement stmt = con.createStatement();
-		//	ResultSet rs = stmt.executeQuery("SELECT EMAIL_USU, NOME_USU FROM usuario");
-		//	while(rs.next()) {
-		//		System.out.println(rs.getString("NOME_USU"));
-		//		System.out.println(rs.getString("EMAIL_USU"));
-		//	}
-		//			
-		//	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-		//		e.printStackTrace();
-		//	}
-		
-		
 	}
 
 }
