@@ -115,10 +115,6 @@ public class TelaEditarCliente extends JFrame {
 				}
 				
 				
-				
-				
-				
-				
 			}
 		});
 		btnAtualizar.setForeground(new Color(255, 255, 255));
@@ -183,9 +179,10 @@ public class TelaEditarCliente extends JFrame {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaInicialAssistente tia = new TelaInicialAssistente();
-				tia.frmGestoDeClnicas.setVisible(true);
+				TelaListaCliente tlc = new TelaListaCliente();
+				tlc.frmSistema.setVisible(true);
 				dispose();
+			
 				
 			}
 		});

@@ -21,6 +21,9 @@ import br.com.matheusdebona.sistemaclinicamedica.core.entity.UsuarioEntity;
 import br.com.matheusdebona.sistemaclinicamedica.core.service.UsuarioService;
 import br.com.matheusdebona.sistemaclinicamedica.util.NegocioException;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class TelaLogin extends JFrame {
 
 	/**
@@ -125,10 +128,6 @@ public class TelaLogin extends JFrame {
 				}
 				
 				
-				
-				
-				
-				
 			}
 		});
 		btnEntrar.setForeground(new Color(255, 255, 255));
@@ -138,15 +137,48 @@ public class TelaLogin extends JFrame {
 		contentPane.add(btnEntrar);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Criado por Matheus de Bona");
+		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1_1.setForeground(Color.WHITE);
 		lblNewLabel_1_1_1.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblNewLabel_1_1_1.setBounds(507, 522, 249, 26);
+		lblNewLabel_1_1_1.setBounds(464, 522, 336, 26);
 		contentPane.add(lblNewLabel_1_1_1);
+		
+		
+		JLabel lblEsqueceuSenha = new JLabel("Esqueceu a sua senha?");
+		lblEsqueceuSenha.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				lblEsqueceuSenha.setEnabled(true);
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+				lblEsqueceuSenha.setEnabled(false);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				TelaCadastroUsuario tcu = new TelaCadastroUsuario();
+				tcu.frmGestoDeClnicas.setVisible(true);
+				tcu.frmGestoDeClnicas.setLocationRelativeTo(null);
+				
+				dispose();
+				
+				
+			}
+		});
+		lblEsqueceuSenha.setEnabled(false);
+		lblEsqueceuSenha.setForeground(Color.BLUE);
+		lblEsqueceuSenha.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEsqueceuSenha.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+		lblEsqueceuSenha.setBounds(549, 437, 170, 26);
+		contentPane.add(lblEsqueceuSenha);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(TelaLogin.class.getResource("/br/com/matheusdebona/sistemaclinicamedica/view/resource/Ícone - Rosa fundo rosa claro.jpg")));
 		lblNewLabel_2.setBounds(0, 0, 1264, 797);
 		contentPane.add(lblNewLabel_2);
-		
 	}
 }

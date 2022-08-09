@@ -54,9 +54,12 @@ public class TelaInicialAssistente {
 		JButton btnCadastrarProcedimentos = new JButton("Cadastrar Procedimentos");
 		btnCadastrarProcedimentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaCadastroCliente cadCliente = new TelaCadastroCliente();
-				cadCliente.setVisible(true);
-				cadCliente.setLocationRelativeTo(null);
+				
+				TelaCadastroProcedimento cadastrarProcedimento = new TelaCadastroProcedimento();
+				cadastrarProcedimento.setVisible(true);
+				cadastrarProcedimento.setLocationRelativeTo(null);
+				
+				frmGestoDeClnicas.dispose();
 				
 				
 			}
@@ -135,6 +138,17 @@ public class TelaInicialAssistente {
 		frmGestoDeClnicas.getContentPane().add(btnListaClientes);
 		
 		JButton btnListaProcedimentos = new JButton("Lista de Procedimentos");
+		btnListaProcedimentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaListaProcedimento tlp = new TelaListaProcedimento();
+				tlp.frmSistema.setVisible(true);
+				tlp.frmSistema.setLocationRelativeTo(null);
+				frmGestoDeClnicas.dispose();
+				
+				
+			}
+		});
 		btnListaProcedimentos.setForeground(new Color(255, 192, 203));
 		btnListaProcedimentos.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		btnListaProcedimentos.setBackground(Color.WHITE);

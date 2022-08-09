@@ -11,7 +11,6 @@ public class UsuarioBO {
 	
 	public String salvarUsuario(UsuarioEntity usuario) throws NegocioException {
 				
-		
 		if(!usuario.getEmail().contains("@")) {
 			System.out.println("Email inválido, favor conferir.");
 		} else if (usuario.getNome() != null && usuario.getNome().equals("")) {
@@ -29,7 +28,6 @@ public class UsuarioBO {
 		
 		return "Erro no cadastro";
 		
-
 	}
 	
 	public List<UsuarioEntity> listarUsuario() throws NegocioException {
@@ -46,4 +44,38 @@ public class UsuarioBO {
 		return udao.autenticacaoUsuario(usuario);
 		} 
 	}
+	
+	public void excluirUsuario(Long codigoUsuario) throws NegocioException {
+		new UsuarioDAO().excluirUsuario(codigoUsuario);
+	}
+	
+	public UsuarioEntity buscarUsuarioPorId(Long codigoUsuario) throws NegocioException {
+		return new UsuarioDAO().buscarUsuarioPorId(codigoUsuario);
+	}
+
+	public String editarUsuario(UsuarioEntity usuario) throws NegocioException {
+		
+		if(!usuario.getEmail().contains("@")) {
+			System.out.println("Email inválido, favor conferir.");
+		} else if (usuario.getNome() != null && usuario.getNome().equals("")) {
+			throw new NegocioException("O nome do usuário precisa ser preenchido.");
+		} else if (usuario.getLogin() != null && usuario.getLogin().equals("")) {
+			throw new NegocioException("O login do usuário precisa ser preenchido.");
+		} else if (usuario.getEmail() != null && usuario.getEmail().equals("")) {
+			throw new NegocioException("O email do usuário precisa ser preenhido.");
+		} else if (usuario.getSenha() != null && usuario.getSenha().equals("")) {
+			throw new NegocioException("O senha do usuário precisa ser preenchida.");
+		} else {
+			UsuarioDAO udao = new UsuarioDAO();
+			return udao.editarUsuario(usuario);	
+		}
+		
+		return "Erro no cadastro";
+		
+	}
+	
+	public List<UsuarioEntity> buscarUsuarioFiltrado(UsuarioEntity usuario) throws NegocioException {
+		return new UsuarioDAO().buscarUsuarioFiltrado(usuario);
+	}
+	
 }

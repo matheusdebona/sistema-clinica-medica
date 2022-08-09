@@ -105,6 +105,7 @@ public class TelaEditarMedico extends JFrame {
 				try {
 					medico.setCodigo(Long.parseLong(textCodigo.getText()));
 					ms.editarMedico(medico);
+					
 					dispose();
 					TelaListaMedico tlm = new TelaListaMedico();
 					tlm.frmSistema.setVisible(true);
@@ -186,8 +187,8 @@ public class TelaEditarMedico extends JFrame {
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaInicialAssistente tia = new TelaInicialAssistente();
-				tia.frmGestoDeClnicas.setVisible(true);
+				TelaListaMedico tlm = new TelaListaMedico();
+				tlm.frmSistema.setVisible(true);
 				dispose();
 				
 			}

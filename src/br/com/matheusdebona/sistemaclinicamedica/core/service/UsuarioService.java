@@ -23,7 +23,22 @@ public class UsuarioService {
 		UsuarioBO usbo = new UsuarioBO();
 		return usbo.autenticacaoUsuario(usuario);
 		
-		
+	}
+	
+	public void excluirUsuario(Long codigoUsuario) throws NegocioException {
+		new UsuarioBO().excluirUsuario(codigoUsuario);
+	}
+	
+	public UsuarioEntity buscarUsuarioPorId(Long codigoUsuario) throws NegocioException {
+		return new UsuarioBO().buscarUsuarioPorId(codigoUsuario);
+	}
+
+	public String editarUsuario(UsuarioEntity usuario) throws NegocioException {
+		return new UsuarioBO().editarUsuario(usuario);
+	}
+	
+	public List<UsuarioEntity> buscarUsuarioFiltrado(UsuarioEntity usuario) throws NegocioException {
+		return new UsuarioBO().buscarUsuarioFiltrado(usuario);
 	}
 	
 }
